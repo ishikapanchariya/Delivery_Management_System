@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Swiggy</title>
+    <link type="text/css" href="style.css" rel="stylesheet">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const loginForm = document.querySelector('#loginForm');
+
+            loginForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent the form from reloading the page
+
+                const email = document.querySelector('#email').value.trim();
+                const password = document.querySelector('#password').value.trim();
+
+                if (!email || !password) {
+                    alert('Please fill out both fields.');
+                    return;
+                }
+
+                // Validate email format
+                if (!email.includes('@') || !email.endsWith('@gmail.com')) {
+                    alert('Please enter a valid Gmail address ending with @gmail.com.');
+                    return;
+                }
+
+                // Simulate OTP generation
+                const otp = generateOTP();
+                alert('OTP sent: ' + otp);
+
+                // Ask user for OTP
+                const otpInput = prompt('Enter the OTP sent to your phone:');
+                const otpExpirationTime = 60; // OTP validity in seconds
+
+                // Start a timer for OTP expiration
+                let timer = otpExpirationTime;
+                const countdown = setInterval(() => {
+                    timer--;
+                    if (timer === 0) {
+                        clearInterval(countdown);
+                        alert('OTP expired. Please try again.');
+                    }
+                }, 1000);
+
+                // Check if OTP matches
+                if (otpInput === otp) {
+                    clearInterval(countdown);
+                    alert('Login successful for email: ' + email);
+                    // Proceed with actual login processing (e.g., API call)
+                } else {
+                    clearInterval(countdown);
+                    alert('Invalid OTP. Please try again.');
+                }
+            });
+
+            // Function to generate a 6-digit OTP
+            function generateOTP() {
+                const otp = Math.floor(100000 + Math.random() * 900000); // Generates a random 6-digit number
+                return otp.toString();
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login to Swiggy</h1>
+        <form id="loginForm" class="login-form">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="login-button">Login</button>
+        </form>
+        <p>Don't have an account? <a href="signup.html">Sign up here</a>.</p>
+    </div>
+</body>
+</html>

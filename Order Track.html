@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Person Features</title>
+    <link type="text/css" href="style.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .delivery-panel {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .delivery-panel h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .orders-list {
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .orders-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .orders-list li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-buttons button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .order-buttons button:hover {
+            background-color: #388E3C;
+        }
+    </style>
+</head>
+<body>
+    <div class="delivery-panel">
+        <h1>Delivery Person Panel</h1>
+
+        <div class="section" id="order-management">
+            <h2>Order Management</h2>
+
+            <div class="orders-list">
+                <h3>Pending Orders</h3>
+                <ul id="pendingOrders">
+                    <li>
+                        <span>Order #123: Pizza and Soda</span>
+                        <div class="order-buttons">
+                            <button class="outForDeliveryButton">Out for Delivery</button>
+                            <button class="deliveredButton">Delivered</button>
+                        </div>
+                    </li>
+                    <li>
+                        <span>Order #124: Burger and Fries</span>
+                        <div class="order-buttons">
+                            <button class="outForDeliveryButton">Out for Delivery</button>
+                            <button class="deliveredButton">Delivered</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section" id="order-tracking">
+            <h2>Order Tracking</h2>
+
+            <div class="orders-list">
+                <h3>Order Logs</h3>
+                <ul id="orderLogs">
+                    <li>No events logged yet.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const pendingOrders = document.querySelector('#pendingOrders');
+            const orderLogs = document.querySelector('#orderLogs');
+
+            // Add event listeners for "Out for Delivery" and "Delivered" buttons
+            pendingOrders.addEventListener('click', function (event) {
+                if (event.target.classList.contains('outForDeliveryButton')) {
+                    logOrderEvent(event.target, 'Out for Delivery');
+                } else if (event.target.classList.contains('deliveredButton')) {
+                    logOrderEvent(event.target, 'Delivered');
+                }
+            });
+
+            function logOrderEvent(button, status) {
+                const orderItem = button.closest('li');
+                const orderDetails = orderItem.querySelector('span').textContent;
+
+                // Log the event
+                const logEntry = document.createElement('li');
+                const timestamp = new Date().toLocaleString();
+                logEntry.textContent = `${orderDetails} - ${status} at ${timestamp}`;
+                orderLogs.appendChild(logEntry);
+
+                // If the status is "Delivered," remove the order from pending orders
+                if (status === 'Delivered') {
+                    pendingOrders.removeChild(orderItem);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

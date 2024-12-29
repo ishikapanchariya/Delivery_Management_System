@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h1 {
+            text-align: center;
+            color: #e57373;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .button {
+            display: inline-block;
+            width: 100%;
+            padding: 10px;
+            background-color: #e57373;
+            color: #ffffff;
+            text-align: center;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .button:hover {
+            background-color: #d32f2f;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .update-container {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="login-container">
+        <h1>Admin Login</h1>
+        <form id="adminLoginForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <div class="form-group">
+                <label for="otp">OTP Verification:</label>
+                <input type="text" id="otp" name="otp" placeholder="Enter the OTP" required>
+                <button type="button" id="generateOtpButton" class="button" style="margin-top: 10px;">Generate OTP</button>
+            </div>
+            <button type="submit" class="button">Login</button>
+            <p id="errorMessage" class="error" style="display: none;">Invalid login credentials. Please try again.</p>
+        </form>
+    </div>
+
+    <div class="container update-container" id="update-container">
+        <h1>Update Admin Credentials</h1>
+        <form id="updateAdminForm">
+            <div class="form-group">
+                <label for="newName">New Name:</label>
+                <input type="text" id="newName" name="newName" placeholder="Enter new name" required>
+            </div>
+            <div class="form-group">
+                <label for="newEmail">New Email:</label>
+                <input type="email" id="newEmail" name="newEmail" placeholder="Enter new email" required>
+            </div>
+            <div class="form-group">
+                <label for="newPassword">New Password:</label>
+                <input type="password" id="newPassword" name="newPassword" placeholder="Enter new password" required>
+            </div>
+            <button type="submit" class="button">Update</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Predefined credentials for admin
+            const adminCredentials = {
+                name: "admin",
+                email: "admin@example.com",
+                password: "admin123"
+            };
+
+            let generatedOtp = null;
+
+            // Handle OTP Generation
+            document.querySelector('#generateOtpButton').addEventListener('click', function () {
+                generatedOtp = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit OTP
+                alert(`Your OTP is: ${generatedOtp}`);
+
+                // Automatically expire OTP after 60 seconds
+                setTimeout(() => {
+                    generatedOtp = null;
+                    alert('Your OTP has expired. Please generate a new one.');
+                }, 60000);
+            });
+
+            // Handle Admin Login Form Submission
+            document.querySelector('#adminLoginForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const name = document.querySelector('#name').value.trim();
+                const email = document.querySelector('#email').value.trim();
+                const password = document.querySelector('#password').value.trim();
+                const otp = document.querySelector('#otp').value.trim();
+
+                // Validate Credentials
+                if (
+                    name === adminCredentials.name &&
+                    email === adminCredentials.email &&
+                    password === adminCredentials.password &&
+                    otp == generatedOtp
+                ) {
+                    alert('Login successful! Redirecting to admin panel...');
+                    window.location.href = 'admin-panel.html'; // Redirect to admin panel page
+                } else {
+                    document.querySelector('#errorMessage').style.display = 'block';
+                    showUpdateForm();
+                }
+            });
+
+            // Show Update Form
+            function showUpdateForm() {
+                document.querySelector('#login-container').style.display = 'none';
+                document.querySelector('#update-container').style.display = 'block';
+            }
+
+            // Handle Admin Credentials Update
+            document.querySelector('#updateAdminForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const newName = document.querySelector('#newName').value.trim();
+                const newEmail = document.querySelector('#newEmail').value.trim();
+                const newPassword = document.querySelector('#newPassword').value.trim();
+
+                if (newName && newEmail && newPassword) {
+                    adminCredentials.name = newName;
+                    adminCredentials.email = newEmail;
+                    adminCredentials.password = newPassword;
+
+                    alert('Admin credentials updated successfully! Please login again.');
+
+                    // Reset forms and go back to login
+                    document.querySelector('#adminLoginForm').reset();
+                    document.querySelector('#updateAdminForm').reset();
+                    document.querySelector('#update-container').style.display = 'none';
+                    document.querySelector('#login-container').style.display = 'block';
+                } else {
+                    alert('Please fill out all fields.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

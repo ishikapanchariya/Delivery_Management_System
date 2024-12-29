@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Person Features</title>
+    <link type="text/css" href="style.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .delivery-panel {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .delivery-panel h1 {
+            text-align: center;
+            color: #4caf50;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .order-list {
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .order-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .order-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #4caf50;
+            color: #ffffff;
+            text-align: center;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="delivery-panel">
+        <h1>Delivery Person Panel</h1>
+
+        <div class="section" id="order-management">
+            <h2>Order Management</h2>
+
+            <div class="order-list">
+                <h3>Pending Orders</h3>
+                <ul id="pendingOrders">
+                    <li>
+                        <span>Order #123: Pizza, Pasta</span>
+                        <button class="button" onclick="markOutForDelivery(this)">Out for Delivery</button>
+                    </li>
+                    <li>
+                        <span>Order #124: Burger, Fries</span>
+                        <button class="button" onclick="markOutForDelivery(this)">Out for Delivery</button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="order-list">
+                <h3>Orders Out for Delivery</h3>
+                <ul id="outForDeliveryOrders">
+                    <!-- Orders marked as "Out for Delivery" will appear here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function markOutForDelivery(button) {
+            const orderItem = button.parentElement;
+            const orderText = orderItem.querySelector('span').textContent;
+
+            // Move order to "Out for Delivery" section
+            const outForDeliveryList = document.querySelector('#outForDeliveryOrders');
+            const newOrderItem = document.createElement('li');
+            newOrderItem.innerHTML = `
+                <span>${orderText}</span>
+                <button class="button" onclick="markDelivered(this)">Delivered</button>
+            `;
+            outForDeliveryList.appendChild(newOrderItem);
+
+            // Remove from pending orders
+            orderItem.remove();
+        }
+
+        function markDelivered(button) {
+            const orderItem = button.parentElement;
+            const orderText = orderItem.querySelector('span').textContent;
+
+            // Alert the user that the order has been delivered
+            alert(`Order delivered: ${orderText}`);
+
+            // Remove the order from the "Out for Delivery" list
+            orderItem.remove();
+        }
+    </script>
+</body>
+</html>

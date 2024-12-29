@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Swiggy</title>
+    <link type="text/css" href="style.css" rel="stylesheet">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const signUpForm = document.querySelector('#signUpForm');
+
+            signUpForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent the form from reloading the page
+
+                const name = document.querySelector('#name').value.trim();
+                const email = document.querySelector('#email').value.trim();
+                const password = document.querySelector('#password').value.trim();
+
+                if (!name || !email || !password) {
+                    alert('Please fill out all fields.');
+                    return;
+                }
+
+                // Validate name format (no special characters, commas, or periods)
+                const namePattern = /^[a-zA-Z\s]+$/;
+                if (!namePattern.test(name)) {
+                    alert('Full name must not contain special characters, commas, or periods.');
+                    return;
+                }
+
+                // Validate email format
+                if (!email.includes('@') || !email.endsWith('@gmail.com')) {
+                    alert('Please enter a valid Gmail address ending with @gmail.com.');
+                    return;
+                }
+
+                // Validate password length
+                if (password.length < 6) {
+                    alert('Password must be at least 6 characters long.');
+                    return;
+                }
+
+                // Simulate OTP generation
+                const otp = generateOTP();
+                alert('OTP sent: ' + otp);
+
+                // Ask user for OTP
+                const otpInput = prompt('Enter the OTP sent to your phone:');
+                const otpExpirationTime = 60; // OTP validity in seconds
+
+                // Start a timer for OTP expiration
+                let timer = otpExpirationTime;
+                const countdown = setInterval(() => {
+                    timer--;
+                    if (timer === 0) {
+                        clearInterval(countdown);
+                        alert('OTP expired. Please try again.');
+                    }
+                }, 1000);
+
+                // Check if OTP matches
+                if (otpInput === otp) {
+                    clearInterval(countdown);
+                    alert('Sign-up successful for: ' + name);
+                    // Proceed with actual sign-up processing (e.g., API call)
+                } else {
+                    clearInterval(countdown);
+                    alert('Invalid OTP. Please try again.');
+                }
+            });
+
+            // Function to generate a 6-digit OTP
+            function generateOTP() {
+                const otp = Math.floor(100000 + Math.random() * 900000); // Generates a random 6-digit number
+                return otp.toString();
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="signup-container">
+        <h1>Create a Swiggy Account</h1>
+        <form id="signUpForm" class="signup-form">
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Create a password" required>
+            </div>
+            <button type="submit" class="signup-button">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="login.html">Login here</a>.</p>
+    </div>
+</body>
+</html>

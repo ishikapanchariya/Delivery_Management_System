@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #e57373;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #e57373;
+            margin-bottom: 15px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #e57373;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .button:hover {
+            background-color: #d32f2f;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Admin Panel</h1>
+    </header>
+
+    <div class="container">
+        <div class="section" id="product-management">
+            <h2>Product Management</h2>
+            <form>
+                <div class="form-group">
+                    <label for="product-name">Product Name:</label>
+                    <input type="text" id="product-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-description">Description:</label>
+                    <textarea id="product-description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="product-price">Price:</label>
+                    <input type="number" id="product-price" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-batch">Batch:</label>
+                    <input type="text" id="product-batch" required>
+                </div>
+                <div class="form-group">
+                    <label for="manufacturing-date">Manufacturing Date:</label>
+                    <input type="date" id="manufacturing-date" required>
+                </div>
+                <button type="button" class="button">Add Product</button>
+            </form>
+            <form style="margin-top: 20px;">
+                <div class="form-group">
+                    <label for="edit-product-name">Product Name:</label>
+                    <input type="text" id="edit-product-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-product-price">New Price:</label>
+                    <input type="number" id="edit-product-price" required>
+                </div>
+                <button type="button" class="button">Edit Price</button>
+            </form>
+        </div>
+
+        <div class="section" id="customer-management">
+            <h2>Customer Management</h2>
+            <button type="button" class="button">View Registered Customers</button>
+            <form style="margin-top: 20px;">
+                <div class="form-group">
+                    <label for="customer-wallet-recharge">Customer Email:</label>
+                    <input type="email" id="customer-wallet-recharge" required>
+                </div>
+                <div class="form-group">
+                    <label for="wallet-amount">Recharge Amount:</label>
+                    <input type="number" id="wallet-amount" required>
+                </div>
+                <button type="button" class="button">Recharge Wallet</button>
+            </form>
+        </div>
+
+        <div class="section" id="order-management">
+            <h2>Order Management</h2>
+            <button type="button" class="button">View Pending Orders</button>
+        </div>
+
+        <div class="section" id="reports-dashboards">
+            <h2>Reports and Dashboards</h2>
+            <button type="button" class="button">Download Sales Report</button>
+            <div style="margin-top: 20px;">
+                <h3>Dashboard</h3>
+                <p>Total Sales: $0.00</p>
+                <p>Most Frequently Sold Products:</p>
+                <ul>
+                    <li>Product 1</li>
+                    <li>Product 2</li>
+                </ul>
+                <p>Significant Customers:</p>
+                <ul>
+                    <li>Customer A</li>
+                    <li>Customer B</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section" id="delivery-person-management">
+            <h2>Delivery Person Management</h2>
+            <form>
+                <div class="form-group">
+                    <label for="delivery-person-name">Name:</label>
+                    <input type="text" id="delivery-person-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="delivery-person-email">Email:</label>
+                    <input type="email" id="delivery-person-email" required>
+                </div>
+                <button type="button" class="button">Create Account</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
